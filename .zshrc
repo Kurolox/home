@@ -19,8 +19,8 @@ zstyle ':completion:*' rehash true
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Theming stuff
+# POWERLEVEL9K_MODE='awesome-fontconfig'
 source  ~/powerlevel9k/powerlevel9k.zsh-theme
-POWERLEVEL9K_MODE='compatible'
 POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="008"
 POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND="008"

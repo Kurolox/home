@@ -94,6 +94,9 @@ bindsym $mod+a focus parent
 
 # bind prt scr to screenshooter
 bindsym Print exec xfce4-screenshooter --region -i
+# screen recording + exception for making it floating
+bindsym Shift+Print exec vokoscreen
+for_window [class="vokoscreen"] floating enable
 #Variables
 
 set $workspace1 "1 "
@@ -106,6 +109,11 @@ set $workspace7 "7 "
 set $workspace8 "8 "
 set $workspace9 "9 "
 set $workspace10 "10 "
+
+# Making the M keys work and output dongers
+exec razer-service
+exec sleep 5 && echo -n "1" > /sys/bus/hid/drivers/razerkbd/0003:1532:011A.000A/macro_keys
+exec sleep 6 && xbindkeys
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -197,7 +205,7 @@ bar {
 
 popup_during_fullscreen leave_fullscreen
 exec setxkbmap es
-exec xrandr --output HDMI-0 --primary --auto --left-of DVI-I-1
+exec xrandr --output DVI-I-1 --primary --auto --right-of HDMI-0 --output HDMI-0 --mode 1280x720
 bindsym $mod+shift+p move workspace to output right
 bindsym $mod+shift+o move workspace to output left
 
@@ -209,21 +217,22 @@ exec --no-startup-id nitrogen --restore
 # Gaps and no borders
 smart_gaps on
 smart_borders on
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border none
+for_window [class="chromium"] border none
 gaps inner 12
 gaps outer 25
 
 #Assign workspaces to screens
-workspace $workspace1 output HDMI-0
-workspace $workspace2 output HDMI-0
-workspace $workspace3 output HDMI-0
-workspace $workspace4 output HDMI-0
-workspace $workspace5 output HDMI-0
-workspace $workspace6 output DVI-I-1
-workspace $workspace7 output DVI-I-1
-workspace $workspace8 output DVI-I-1
-workspace $workspace9 output DVI-I-1
-workspace $workspace10 output DVI-I-1
+workspace $workspace6 output HDMI-0
+workspace $workspace7 output HDMI-0
+workspace $workspace8 output HDMI-0
+workspace $workspace9 output HDMI-0
+workspace $workspace10 output HDMI-0
+workspace $workspace1 output DVI-I-1
+workspace $workspace2 output DVI-I-1
+workspace $workspace3 output DVI-I-1
+workspace $workspace4 output DVI-I-1
+workspace $workspace5 output DVI-I-1
 
 #force windows
 
@@ -235,17 +244,18 @@ assign [class="Atom"] $workspace2
 
 # Launch default programs
 
-exec i3-msg 'workspace $workspace1; exec firefox-aurora'
+exec i3-msg 'workspace $workspace1; exec chromium'
 exec i3-msg 'workspace $workspace2; exec mate-terminal'
-exec sleep 5 && DiscordCanary
+exec i3-msg 'workspace $workspace9; exec enpass'
+exec discord-canary
 exec steam
 exec atom
 exec hexchat
 exec blueman-applet
-exec sleep 10 && teamspeak3
+#exec sleep 10 && teamspeak3
 exec xset -dpms
 exec xset s off
 exec --no-startup-id compton -cCGb --backend glx --vsync opengl
-exec enpass
+#exec compton --vsync opengl
 
 # Always leave this empty line at the end
